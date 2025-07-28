@@ -1,0 +1,122 @@
+.ul-footer {
+  display: flex;
+  justify-content: space-around;
+  background-color: #4E351E;
+  align-items: center;
+}
+
+.ul {
+  background-color: #4E351E;
+  font-size: 20px;
+  flex: 1;
+  padding: 0 10px;
+}
+.ul li {
+  margin-top: 15px;
+  background-color: #4E351E;
+}
+     
+.ul ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  background-color: #4E351E;
+}
+
+.ul span {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+.logo2{
+    display: flex;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #FFFFFF;
+    letter-spacing: 0.1rem;
+    text-align: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    text-decoration: none;
+    background-color: transparent;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    justify-content: center;
+}
+footer {
+    background-color: #4E351E;
+    width: 100%;
+    height: 100%;
+    margin-top: 30px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+span {
+  background-color: #4E351E;
+  font-weight: lighter;
+}
+li{
+    background-color: #4E351E;
+    font-size: 15px;
+}
+.M{
+    background-color: #4E351E;
+    text-decoration: none;
+    color:black
+}
+.C{
+    background-color: #4E351E;      
+    text-decoration: none;
+    color:black
+}
+.A{
+    background-color: #4E351E;
+    text-decoration: none;
+    color:black
+}
+.rights{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #4E351E;
+    text-decoration: none;
+    color:black;
+    text-align: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.footer{
+    text-align: space-around;
+    background-color: transparent;
+}
+.icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 20px;
+    background-color: transparent;
+}
+
+footer {
+    background-color: #4E351E;
+    width: 100%;
+    margin-top: auto; 
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    position: relative;
+    bottom: 0;
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-wrap {
+    flex: 1;
+}
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}

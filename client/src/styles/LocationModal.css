@@ -1,0 +1,164 @@
+.location-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.location-modal {
+  background: white;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.location-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  background-color: #6C5E4F;
+  color: white;
+}
+
+.location-modal-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.location-search {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.location-search-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.location-search-input:focus {
+  border-color: #6C5E4F;
+}
+
+.map-container {
+  height: 300px;
+  position: relative;
+}
+
+.google-map {
+  width: 100%;
+  height: 100%;
+}
+
+.selected-location {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  background-color: #f9f9f9;
+}
+
+.selected-location h4 {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  color: black;
+  background-color: transparent;
+}
+
+.selected-location p {
+  margin: 0;
+  color: black;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  background-color: transparent;
+}
+
+.location-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 20px;
+}
+
+.cancel-btn,
+.confirm-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-btn {
+  background-color: #ddd;
+  color: #666;
+}
+
+.cancel-btn:hover {
+  background-color: #ccc;
+}
+
+.confirm-btn {
+  background-color: #4E351E;
+  color: white;
+}
+
+.confirm-btn:hover {
+  background-color: #5a4f41;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .location-modal {
+    width: 95%;
+    height: 90vh;
+  }
+  
+  .map-container {
+    height: 250px;
+  }
+  
+  .location-modal-footer {
+    flex-direction: column;
+  }
+  
+  .cancel-btn,
+  .confirm-btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,221 @@
+.slo1{
+    color: #C2BEBE;
+    font-size: 3.5rem;
+    margin-left: 50px;
+    letter-spacing: 4px;
+    background-color: transparent;
+}
+.slo2{
+    color:white;
+    font-size: 4.5rem;
+    margin-left: 50px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    background-color: transparent;
+}
+.te{
+    margin-left: 70px;
+    margin-top: 40px;
+    background-color: transparent;
+}
+.order {
+    background-color: #FFECCC;
+    color: #463215;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: background 0.2s, color 0.2s, transform 0.1s;
+    text-decoration: none;
+    width: 160px;
+    padding: 15px 0;
+    text-align: center;
+    display: block;
+    margin-top: 40px ;
+    margin-left: 100px;
+}
+.order:hover {
+    background-color: #A9A3A3;
+    color: #fff;
+    transform: translateY(-2px) scale(1.03);
+}
+
+.home-content {
+   position: relative;
+  display: inline-block;
+}
+.home-content img {
+    width: 95%;
+    height: 500px;
+    display: block;
+    object-fit: cover;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-radius: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.banner-text {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    color: white;
+   background-color: transparent;
+}
+.top {
+    text-align: center;
+    color:white;
+    font-size: 2.5rem;
+}
+.top1{
+    text-align: center;
+    color:white;
+    letter-spacing: 3px;
+}
+body {
+  background-color: #6b5b4c; /* Coffee brown background */
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.coffee-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  padding: 40px;
+  justify-items: center;
+}
+
+.coffee-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+}
+.coffee-card img.cover-style {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 10px;
+    padding: 8px;
+    box-sizing: border-box;
+    background-color: transparent;
+}
+.menu-grid .coffee-card img {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    object-position: center;
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+.coffee-card img {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    object-position: center;
+    background-color: transparent; 
+    border-radius: 10px;
+    padding: 8px; 
+    box-sizing: border-box;
+}
+
+.info {
+  margin-top: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 12px;
+}
+
+.name {
+  font-weight: bold;
+  color: black;
+}
+
+.price {
+  font-weight: bold;
+  color: #d1d1d1;
+}
+
+.banner {
+  border-radius: 40px;
+    width: 100%;
+}
+.banner2 {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  margin-left: auto;
+   margin-right: auto;
+}
+.banner2 img {
+  width: 95%;
+  height: 100%; 
+  margin-left: 30px;
+} 
+.sl1{
+  color: black;
+  font-size: 2rem;
+  background-color: transparent;
+}
+.te1{
+background-color: transparent;
+  color: rgb(50, 48, 48);
+  font-size: 1.2rem;
+  margin-top: 20px;
+  width: 60%;
+  font-weight: bold;
+}
+.banner-text1 {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    color: white;
+   background-color: transparent;
+}
+.top3 {
+    text-align: center;
+    color:white;
+    font-size: 1rem;
+    margin-top: 50px;
+    font-weight: normal;
+}
+.top2{
+    text-align: center;
+    color:white;
+    font-size:3rem;
+    margin-top: 120px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.payment {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  text-align: start;
+  color:black;
+  margin-top: 50px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-left: 100px;
+  margin-top: 150px;
+}
+.payment
+  img {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    border-radius: 15px;
+    margin-left: 150px;
+  }

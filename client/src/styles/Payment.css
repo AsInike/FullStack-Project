@@ -1,0 +1,296 @@
+.payment-main {
+  min-height: 100vh;
+  background-color: #6C5E4F;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.payment-container {
+  width: 100%;
+  max-width: 600px;
+  background: #74583F;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.payment-header {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #6C5E4F;
+  padding-bottom: 20px;
+  background-color: transparent;
+}
+
+.payment-header h2 {
+  color: black;
+  font-size: 2rem;
+  margin: 0 0 10px 0;
+}
+
+.payment-header p {
+  color: black;
+  margin: 0;
+  background-color: transparent;
+}
+
+/* Order Summary */
+.order-summary {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color:  #4E351E;
+  border-radius: 10px;
+}
+
+.order-summary h3 {
+  color: #6C5E4F;
+  margin: 0 0 15px 0;
+  background-color: transparent;
+  
+}
+
+.order-items {
+  margin-bottom: 15px;
+  background-color: transparent;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  background-color: transparent;
+}
+
+.order-item:last-child {
+  border-bottom: none;
+}
+
+.item-name {
+  flex: 1;
+  font-weight: 500;
+  color: black;
+}
+
+.item-qty {
+  margin: 0 15px;
+  color: black;
+  font-weight: bold;
+}
+
+.item-price {
+  font-weight: bold;
+  color: black;
+}
+
+.order-total {
+  text-align: right;
+  font-size: 1.2rem;
+  color: black;
+  padding-top: 10px;
+  border-top: 2px solid #6C5E4F;
+  background-color: transparent;  
+}
+.order-total strong {
+  background-color: transparent;
+}
+
+.delivery-info {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #ddd;
+}
+
+.delivery-info h4 {
+  margin: 0 0 5px 0;
+  color: #6C5E4F;
+}
+
+.delivery-info p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Payment Section */
+.payment-section {
+  margin-top: 30px;
+  background-color: transparent;
+}
+
+
+.payment-reference {
+  text-align: center;
+  margin-bottom: 25px;
+  padding: 20px;
+  background-color: #4E351E;
+  border-radius: 10px;
+  border: 2px solid black;
+}
+
+.payment-reference h3 {
+  color: black;
+  margin: 0 0 10px 0;
+  background-color: transparent;
+}
+
+.reference-code {
+  font-size: 1.5rem;
+  font-family: 'Courier New', monospace;
+  color: #6C5E4F;
+  background: #F1CEB1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+ 
+}
+.reference-code strong {
+  background-color: transparent;
+}
+
+.reference-note {
+  margin: 10px 0 0 0;
+  color: black;
+  font-size: 0.9rem;
+  background-color: transparent;
+}
+
+.qr-payment {
+  text-align: center;
+  margin-bottom: 25px;
+  background-color: transparent;
+}
+.qr-payment h3 {
+  color: black;
+  margin: 0 0 15px 0;
+  background-color: transparent;
+}
+
+.qr-code-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 20px;
+  background: #4E351E;
+  border-radius: 10px;
+  border: 2px solid black;
+}
+.qr-code-container .qr-code  {
+ display: flex;
+flex-direction: column;
+background-color: transparent;
+}
+.qr-code-container .qr-code  .payment-amount {
+  font-size: 1.3rem;
+  color: black;
+  margin-top: 15px;
+  background-color: transparent;
+}
+.payment-amount strong {
+  background-color: transparent;
+  color : black;
+}
+
+.payment-instructions {
+  background-color: #4E351E;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  border: 2px solid black;
+}
+
+.payment-instructions h4 {
+  color: black;
+  margin: 0 0 15px 0;
+  background-color: transparent;
+}
+
+.payment-instructions ol {
+  margin: 0;
+  padding-left: 20px;
+  background-color: transparent;
+}
+
+.payment-instructions li {
+  margin: 8px 0;
+  color: black;
+  line-height: 1.5;
+}
+.payment-instructions li strong{
+  color: #6C5E4F;
+  background-color: transparent;
+}
+.payment-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  background-color: transparent;
+}
+
+.payment-confirm-btn,
+.payment-cancel-btn {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: transparent;
+}
+
+.payment-confirm-btn {
+  background-color: #553C24;
+  color: white;
+}
+
+.payment-confirm-btn:hover:not(:disabled) {
+  background-color: black;
+  transform: translateY(-2px);
+  color: white;
+}
+
+.payment-confirm-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.payment-cancel-btn {
+  background-color: #ddd;
+  color: #666;
+}
+
+.payment-cancel-btn:hover {
+  background-color: #ccc;
+}
+
+.payment-error {
+  text-align: center;
+  color: white;
+  padding: 50px 20px;
+}
+
+.payment-error h2 {
+  margin: 0 0 15px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .payment-container {
+    margin: 10px;
+    padding: 20px;
+  }
+  
+  .payment-actions {
+    flex-direction: column;
+  }
+  
+  .qr-code-container canvas {
+    max-width: 100%;
+    height: auto;
+  }
+}
