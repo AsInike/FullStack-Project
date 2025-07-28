@@ -361,3 +361,109 @@ export const productsAPI = {
     }
   }
 };
+
+// Admin API functions
+export const adminAPI = {
+  getDashboard: async (userId) => {
+    try {
+      const response = await fetch(`${API_BASE}/admin/dashboard`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'user-id': userId
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch dashboard data');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Admin dashboard API error:', error);
+      throw error;
+    }
+  },
+
+  getCustomers: async (userId) => {
+    try {
+      const response = await fetch(`${API_BASE}/admin/customers`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'user-id': userId
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch customers');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Admin customers API error:', error);
+      throw error;
+    }
+  },
+
+  getOrders: async (userId) => {
+    try {
+      const response = await fetch(`${API_BASE}/admin/orders`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'user-id': userId
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch orders');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Admin orders API error:', error);
+      throw error;
+    }
+  },
+
+  updateOrderStatus: async (userId, orderId, status) => {
+    try {
+      const response = await fetch(`${API_BASE}/admin/orders/${orderId}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'user-id': userId
+        },
+        body: JSON.stringify({ status })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to update order status');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Admin update order status API error:', error);
+      throw error;
+    }
+  },
+
+  resetCustomerPoints: async (userId, customerId) => {
+    try {
+      const response = await fetch(`${API_BASE}/admin/customers/${customerId}/reset-points`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'user-id': userId
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to reset customer points');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Admin reset points API error:', error);
+      throw error;
+    }
+  }
+};

@@ -19,5 +19,15 @@ export const User = db.define('User', {
   password: { 
     type: DataTypes.STRING, 
     allowNull: false 
+  },
+  points: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    allowNull: false
+  },
+  role: {
+    type: DataTypes.ENUM('customer', 'admin'),
+    defaultValue: 'customer',
+    allowNull: false
   }
 });

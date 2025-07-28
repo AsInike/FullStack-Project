@@ -6,6 +6,7 @@ import cartRouter from './routes/cartRouter.js';
 import contactRouter from './routes/contactRouter.js';
 import ordersRouter from './routes/ordersRouter.js';
 import productsRouter from './routes/productsRouter.js';
+import adminRouter from './routes/adminRouter.js';
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use('/api/cart', cartRouter);
 app.use('/api/contact', contactRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/products', productsRouter);
+app.use('/api/admin', adminRouter);
 
 // Test route
 app.get('/', (req, res) => {

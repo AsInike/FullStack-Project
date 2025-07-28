@@ -17,7 +17,7 @@ export const Order = db.define('Order', {
     defaultValue: 0
   },
   status: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM('pending', 'approved', 'preparing', 'ready', 'delivered', 'cancelled'),
     allowNull: false,
     defaultValue: 'pending'
   },

@@ -29,7 +29,13 @@ const Header = () => {
       <nav className="navbar">
         <Link to="/" className='h'>Home</Link>
         <Link to="/menu" className='m'>Menu</Link>
-        <Link to="/contact" className='c'>Contact</Link>
+        {user && user.role === 'admin' ? (
+          <Link to="/admin-dashboard" className='c'>Dashboard</Link>
+        ) : user ? (
+          <Link to="/orders" className='c'>Orders</Link>
+        ) : (
+          <Link to="/contact" className='c'>Contact</Link>
+        )}
         {user && <Link to="/cart" className='c'>Cart</Link>}
       </nav>
     </header>

@@ -12,6 +12,7 @@ import Contact from './pages/Contact';
 import Payment from './pages/Payment';
 import History from './pages/History';
 import Orders from './pages/Orders';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/payment" element={<Payment />} />
           <Route path="/history" element={<History />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
         </Routes>
       </div>
     </AuthProvider>
