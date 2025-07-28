@@ -4,7 +4,8 @@ import { db } from './config/database.js';
 import authRouter from './routes/authRouter.js';
 import cartRouter from './routes/cartRouter.js';
 import contactRouter from './routes/contactRouter.js';
-import ordersRouter from './routes/ordersRouter.js'; // ADD THIS LINE
+import ordersRouter from './routes/ordersRouter.js';
+import productsRouter from './routes/productsRouter.js';
 
 const app = express();
 
@@ -16,7 +17,8 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/contact', contactRouter);
-app.use('/api/orders', ordersRouter); // ADD THIS LINE
+app.use('/api/orders', ordersRouter);
+app.use('/api/products', productsRouter);
 
 // Test route
 app.get('/', (req, res) => {
