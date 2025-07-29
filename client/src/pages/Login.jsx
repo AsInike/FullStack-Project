@@ -19,9 +19,31 @@ const Login = () => {
     setError('');
 
     try {
-      await login(email, password);
+      console.log('Starting login process...');
+      const userData = await login(email, password);
+      console.log('Login successful, userData:', userData);
+      
+      // Ensure localStorage is updated
+      if (userData.id && userData.role) {
+        localStorage.setItem('user', JSON.stringify(userData));
+        console.log('User data saved to localStorage:', userData);
+      }
+      
       alert('Login successful!');
-      navigate('/'); // Redirect to home page
+      
+      // Small delay to ensure state updates
+      setTimeout(() => {
+        // Redirect based on user role
+        if (userData && userData.role === 'admin') {
+          console.log('User is admin, navigating to admin dashboard...');
+          window.location.href = '/admin-dashboard'; // Force full page navigation
+          console.log('Window location changed to admin dashboard');
+        } else {
+          console.log('User is customer, navigating to home...');
+          navigate('/', { replace: true });
+        }
+      }, 100);
+      
     } catch (error) {
       setError(error.message || 'Login failed');
     } finally {

@@ -118,6 +118,7 @@ export const authAPI = {
 
   login: async (email, password) => {
     try {
+      console.log('API - Making login request to:', `${API_BASE}/auth/login`);
       const response = await fetch(`${API_BASE}/auth/login`, {
         method: 'POST',
         headers: { 
@@ -128,6 +129,9 @@ export const authAPI = {
       });
       
       const data = await response.json();
+      console.log('API - Raw response data:', data);
+      console.log('API - User object from response:', data.user);
+      console.log('API - User role from response:', data.user?.role);
       
       if (!response.ok) {
         throw new Error(data.error || 'Login failed');
@@ -137,10 +141,12 @@ export const authAPI = {
       if (data.token) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
+        console.log('API - Saved to localStorage:', JSON.stringify(data.user));
       }
       
       return data;
     } catch (error) {
+      console.error('API - Login error:', error);
       if (error.name === 'TypeError' && error.message.includes('fetch')) {
         throw new Error('Network error: Unable to connect to server.');
       }
@@ -248,7 +254,7 @@ export const cartAPI = {
   }
 };
 
-// Orders API functions (FIXED - proper syntax and structure)
+// Orders API functions
 export const ordersAPI = {
   create: (orderData) => authenticatedApiCall('/orders', {
     method: 'POST',
@@ -271,11 +277,23 @@ export const ordersAPI = {
   
   getPendingPayments: () => authenticatedApiCall('/orders/pending-payments'),
   
-  // Alternative method for compatibility (FIXED - moved inside ordersAPI object)
   getHistory: async (userId) => {
     try {
       const response = await authenticatedApiCall(`/orders/user/${userId}`);
-      return response; // authenticatedApiCall already returns parsed JSON
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  // Customer claims their own free drink
+  claimFreeDrink: async (userId) => {
+    try {
+      const response = await authenticatedApiCall(`/orders/claim-free-drink`, {
+        method: 'POST',
+        body: JSON.stringify({ userId }),
+      });
+      return response;
     } catch (error) {
       throw error;
     }
@@ -313,7 +331,6 @@ export const contactAPI = {
     }
   },
   
-  // Alternative method using apiCall
   submit: (contactData) => apiCall('/contact', {
     method: 'POST',
     body: JSON.stringify(contactData),
@@ -426,6 +443,7 @@ export const adminAPI = {
 
   updateOrderStatus: async (userId, orderId, status) => {
     try {
+      console.log('API - Updating order status:', { userId, orderId, status });
       const response = await fetch(`${API_BASE}/admin/orders/${orderId}/status`, {
         method: 'PUT',
         headers: {
@@ -435,11 +453,16 @@ export const adminAPI = {
         body: JSON.stringify({ status })
       });
       
+      console.log('API - Response status:', response.status);
+      
       if (!response.ok) {
-        throw new Error('Failed to update order status');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to update order status');
       }
       
-      return await response.json();
+      const result = await response.json();
+      console.log('API - Update result:', result);
+      return result;
     } catch (error) {
       console.error('Admin update order status API error:', error);
       throw error;
@@ -463,6 +486,56 @@ export const adminAPI = {
       return await response.json();
     } catch (error) {
       console.error('Admin reset points API error:', error);
+      throw error;
+    }
+  },
+
+  claimFreeDrink: async (userId, customerId) => {
+    try {
+      const response = await fetch(`${API_BASE}/admin/customers/${customerId}/claim-free-drink`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'user-id': userId
+        }
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to claim free drink');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Admin claim free drink API error:', error);
+      throw error;
+    }
+  },
+
+  updatePaymentStatus: async (userId, orderId, paymentStatus) => {
+    try {
+      console.log('API - Updating payment status:', { userId, orderId, paymentStatus });
+      const response = await fetch(`${API_BASE}/admin/orders/${orderId}/payment-status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'user-id': userId
+        },
+        body: JSON.stringify({ paymentStatus })
+      });
+      
+      console.log('API - Payment response status:', response.status);
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to update payment status');
+      }
+      
+      const result = await response.json();
+      console.log('API - Payment update result:', result);
+      return result;
+    } catch (error) {
+      console.error('Admin update payment status API error:', error);
       throw error;
     }
   }

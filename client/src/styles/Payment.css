@@ -53,6 +53,7 @@
 .order-items {
   margin-bottom: 15px;
   background-color: transparent;
+  border-bottom: none;
 }
 
 .order-item {
@@ -60,8 +61,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px 0;
-  border-bottom: 1px solid #eee;
   background-color: transparent;
+  border-bottom: none;
 }
 
 .order-item:last-child {
@@ -78,6 +79,7 @@
   margin: 0 15px;
   color: black;
   font-weight: bold;
+  background-color: transparent;
 }
 
 .item-price {
@@ -110,7 +112,7 @@
 
 .delivery-info p {
   margin: 0;
-  color: #666;
+  color: #6C5E4F;
   font-size: 0.9rem;
 }
 
@@ -127,7 +129,7 @@
   padding: 20px;
   background-color: #4E351E;
   border-radius: 10px;
-  border: 2px solid black;
+  border: 2px solid #f4a261;
 }
 
 .payment-reference h3 {
@@ -176,7 +178,7 @@
   padding: 20px;
   background: #4E351E;
   border-radius: 10px;
-  border: 2px solid black;
+  border: 2px solid #f4a261;
 }
 .qr-code-container .qr-code  {
  display: flex;
@@ -199,7 +201,7 @@ background-color: transparent;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 25px;
-  border: 2px solid black;
+  border: 2px solid #f4a261;
 }
 
 .payment-instructions h4 {

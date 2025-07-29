@@ -1,3 +1,4 @@
+
 .location-modal-overlay {
   position: fixed;
   top: 0;
@@ -19,6 +20,7 @@
   max-height: 80vh;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 2px solid #f4a261;
 }
 
 .location-modal-header {

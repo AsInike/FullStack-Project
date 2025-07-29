@@ -72,7 +72,7 @@
 }
 
 .orders-header h2 {
-  color: #6C5E4F;
+  color: #f4a261;
   margin: 0;
   font-size: 2rem;
 }
@@ -164,7 +164,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #e0e0e0;
+
 }
 .order-info{
     color: black;
@@ -210,7 +210,7 @@
   align-items: center;
   gap: 15px;
   padding: 10px 0;
-  border-bottom: 1px solid #f0f0f0;
+
 }
 
 .order-item:last-child {
@@ -227,6 +227,7 @@
 
 .item-details {
   flex: 1;
+  background-color: transparent;
 }
 
 .item-name {
@@ -256,7 +257,7 @@
 }
 
 .delivery-location {
-  background: #f9f9f9;
+  background: #81644A;
   padding: 15px;
   border-radius: 8px;
   border-left: 4px solid #6C5E4F;
@@ -264,15 +265,17 @@
 
 .delivery-location h5 {
   margin: 0 0 8px 0;
-  color: #6C5E4F;
+  color: black;
   font-size: 1rem;
+  background-color: transparent;
 }
 
 .delivery-location p {
   margin: 0;
-  color: #666;
+  color: rgb(85, 84, 84);
   font-size: 0.9rem;
   line-height: 1.4;
+  background-color: transparent;
 }
 
 /* Responsive Design */

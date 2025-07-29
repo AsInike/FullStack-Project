@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { CustomerOnlyRoute, AdminOnlyRoute } from './components/RouteProtection';
 
 // Import your pages
 import Home from './pages/Home';
@@ -19,15 +20,43 @@ function App() {
     <AuthProvider>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={
+            <CustomerOnlyRoute>
+              <Home />
+            </CustomerOnlyRoute>
+          } />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/orders" element={<Orders />} />
+          <Route path="/menu" element={
+            <CustomerOnlyRoute>
+              <Menu />
+            </CustomerOnlyRoute>
+          } />
+          <Route path="/cart" element={
+            <CustomerOnlyRoute>
+              <Cart />
+            </CustomerOnlyRoute>
+          } />
+          <Route path="/contact" element={
+            <CustomerOnlyRoute>
+              <Contact />
+            </CustomerOnlyRoute>
+          } />
+          <Route path="/payment" element={
+            <CustomerOnlyRoute>
+              <Payment />
+            </CustomerOnlyRoute>
+          } />
+          <Route path="/history" element={
+            <CustomerOnlyRoute>
+              <History />
+            </CustomerOnlyRoute>
+          } />
+          <Route path="/orders" element={
+            <CustomerOnlyRoute>
+              <Orders />
+            </CustomerOnlyRoute>
+          } />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
         </Routes>
       </div>

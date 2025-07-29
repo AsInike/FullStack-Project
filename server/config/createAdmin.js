@@ -8,8 +8,8 @@ const createAdminUser = async () => {
     await db.authenticate();
     console.log('✅ Database connected successfully');
     
-    // Sync database
-    await db.sync({ force: true }); // Use force to recreate tables
+    // Sync database (don't use force to preserve existing data)
+    await db.sync({ alter: true });
     console.log('✅ Database synced');
     
     // Check if admin already exists

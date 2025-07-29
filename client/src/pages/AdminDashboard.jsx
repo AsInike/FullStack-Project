@@ -1,12 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { adminAPI } from '../services/api';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 import '../styles/AdminDashboard.css';
 
 const AdminDashboard = () => {
-  const { user } = useAuth();
+  const { user, loading: authLoading, refreshUser } = useAuth();
+  
+  // Debug user object
+  console.log('AdminDashboard - user object:', user);
+  console.log('AdminDashboard - user role:', user?.role);
+  console.log('AdminDashboard - authLoading:', authLoading);
+  
+  // Refresh user data on component mount
+  useEffect(() => {
+    if (!user || !user.role) {
+      console.log('AdminDashboard - Refreshing user data...');
+      refreshUser();
+    }
+  }, [user, refreshUser]);
+  
   const [activeTab, setActiveTab] = useState('dashboard');
   const [dashboardData, setDashboardData] = useState(null);
   const [customers, setCustomers] = useState([]);
@@ -14,13 +27,7 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    if (user && user.role === 'admin') {
-      fetchData();
-    }
-  }, [user, activeTab]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       setError('');
@@ -40,15 +47,32 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeTab, user]);
+
+  useEffect(() => {
+    if (user && user.role === 'admin') {
+      fetchData();
+    }
+  }, [user, activeTab, fetchData]);
 
   const handleOrderStatusUpdate = async (orderId, newStatus) => {
     try {
+      console.log('Updating order status:', { orderId, newStatus, userId: user.id });
       await adminAPI.updateOrderStatus(user.id, orderId, newStatus);
       alert(`Order status updated to ${newStatus}`);
       fetchData(); // Refresh data
     } catch (err) {
-      alert('Failed to update order status: ' + err.message);
+      console.error('Error updating order status:', err);
+      
+      // Show specific error messages for business logic violations
+      const errorMessage = err.response?.data?.error || err.message;
+      if (errorMessage.includes('rejected payment')) {
+        alert('❌ Cannot process order with rejected payment. Only pending or cancelled status allowed.');
+      } else if (errorMessage.includes('verified payment')) {
+        alert('❌ Cannot deliver order without verified payment. Please verify payment first.');
+      } else {
+        alert('Failed to update order status: ' + errorMessage);
+      }
     }
   };
 
@@ -64,23 +88,76 @@ const AdminDashboard = () => {
     }
   };
 
-  // Check if user is admin
-  if (!user || user.role !== 'admin') {
+  const handleClaimFreeDrink = async (customerId) => {
+    if (window.confirm('Claim free drink for this customer? This will subtract 10 points.')) {
+      try {
+        await adminAPI.claimFreeDrink(user.id, customerId);
+        alert('Free drink claimed successfully! Customer has been notified.');
+        fetchData(); // Refresh data
+      } catch (err) {
+        alert('Failed to claim free drink: ' + err.message);
+      }
+    }
+  };
+
+  const handlePaymentStatusUpdate = async (orderId, paymentStatus) => {
+    try {
+      console.log('Frontend - Updating payment status:', { orderId, paymentStatus, userId: user.id });
+      await adminAPI.updatePaymentStatus(user.id, orderId, paymentStatus);
+      const statusLabel = paymentStatus === 'pending_verification' ? 'Pending' : 
+                         paymentStatus === 'verified' ? 'Approved' : 
+                         paymentStatus === 'not_verified' ? 'Rejected' : paymentStatus;
+      
+      if (paymentStatus === 'not_verified') {
+        alert(`Payment status updated to ${statusLabel}. Order has been automatically cancelled.`);
+      } else {
+        alert(`Payment status updated to ${statusLabel}`);
+      }
+      
+      await fetchData(); // Refresh the orders list
+    } catch (error) {
+      console.error('Error updating payment status:', error);
+      alert('Failed to update payment status: ' + (error.response?.data?.message || error.message));
+    }
+  };
+
+  // Check if user is admin - but wait for auth to load first
+  if (authLoading) {
     return (
       <>
-        <Header />
+        <Header showNavbar={false} />
+        <div className="admin-loading" style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          height: '50vh',
+          fontSize: '18px'
+        }}>
+          Loading...
+        </div>
+      </>
+    );
+  }
+
+  if (!user || user.role !== 'admin') {
+    console.log('AdminDashboard - ACCESS DENIED - user:', user);
+    console.log('AdminDashboard - ACCESS DENIED - user.role:', user?.role);
+    console.log('AdminDashboard - ACCESS DENIED - Check: !user =', !user, ', user.role !== admin =', user?.role !== 'admin');
+    
+    return (
+      <>
+        <Header showNavbar={false} />
         <div className="admin-error">
           <h2>Access Denied</h2>
           <p>You need admin privileges to access this page.</p>
         </div>
-        <Footer />
       </>
     );
   }
 
   return (
     <>
-      <Header />
+      <Header showNavbar={false} />
       <div className="admin-dashboard">
         <div className="admin-header">
           <h1>Admin Dashboard</h1>
@@ -185,14 +262,24 @@ const AdminDashboard = () => {
                             </td>
                             <td>{new Date(customer.createdAt).toLocaleDateString()}</td>
                             <td>
-                              {customer.points > 0 && (
-                                <button 
-                                  className="reset-points-btn"
-                                  onClick={() => handleResetPoints(customer.id)}
-                                >
-                                  Reset Points
-                                </button>
-                              )}
+                              <div className="customer-actions">
+                                {customer.points >= 10 && (
+                                  <button 
+                                    className="claim-drink-btn"
+                                    onClick={() => handleClaimFreeDrink(customer.id)}
+                                  >
+                                    Claim Free Drink
+                                  </button>
+                                )}
+                                {customer.points > 0 && (
+                                  <button 
+                                    className="reset-points-btn"
+                                    onClick={() => handleResetPoints(customer.id)}
+                                  >
+                                    Reset Points
+                                  </button>
+                                )}
+                              </div>
                             </td>
                           </tr>
                         ))}
@@ -217,33 +304,59 @@ const AdminDashboard = () => {
                         </div>
                         
                         <div className="order-details">
-                          <p><strong>Customer:</strong> {order.User.name} ({order.User.email})</p>
+                          <p><strong>Customer:</strong> {order.user.name} ({order.user.email})</p>
                           <p><strong>Total:</strong> ${order.total}</p>
                           <p><strong>Date:</strong> {new Date(order.createdAt).toLocaleString()}</p>
+                          <p><strong>Payment Status:</strong> 
+                            <span className={`payment-status ${order.paymentStatus || 'pending_verification'}`}>
+                              {order.paymentStatus === 'pending_verification' ? 'PENDING' : 
+                               order.paymentStatus === 'verified' ? 'APPROVED' : 
+                               order.paymentStatus === 'not_verified' ? 'REJECTED' : 
+                               (order.paymentStatus || 'pending_verification').toUpperCase()}
+                            </span>
+                          </p>
+                          {order.paymentReference && (
+                            <p><strong>Payment Reference:</strong> {order.paymentReference}</p>
+                          )}
                           
                           <div className="order-items">
                             <h5>Items:</h5>
                             {order.OrderItems.map(item => (
                               <div key={item.id} className="order-item">
                                 <img src={item.Product.img} alt={item.Product.name} />
-                                <span>{item.Product.name} x{item.quantity}</span>
-                                <span>${(item.Product.price * item.quantity).toFixed(2)}</span>
+                                <span>{item.Product.name} x{item.qty}</span>
+                                <span>${(item.Product.price * item.qty).toFixed(2)}</span>
                               </div>
                             ))}
                           </div>
                           
                           <div className="order-actions">
-                            <select 
-                              value={order.status} 
-                              onChange={(e) => handleOrderStatusUpdate(order.id, e.target.value)}
-                            >
-                              <option value="pending">Pending</option>
-                              <option value="approved">Approved</option>
-                              <option value="preparing">Preparing</option>
-                              <option value="ready">Ready</option>
-                              <option value="delivered">Delivered</option>
-                              <option value="cancelled">Cancelled</option>
-                            </select>
+                            <div className="status-controls">
+                              <label>Order Status:</label>
+                              <select className='order-status-select'
+                                value={order.status} 
+                                onChange={(e) => handleOrderStatusUpdate(order.id, e.target.value)}
+                              >
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="preparing">Preparing</option>
+                                <option value="ready">Ready</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                              </select>
+                            </div>
+                            
+                            <div className="payment-controls">
+                              <label>Payment Status:</label>
+                              <select className='payment-status-select'
+                                value={order.paymentStatus || 'pending_verification'} 
+                                onChange={(e) => handlePaymentStatusUpdate(order.id, e.target.value)}
+                              >
+                                <option value="pending_verification">Pending</option>
+                                <option value="verified">Approved</option>
+                                <option value="not_verified">Rejected</option>
+                              </select>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -255,7 +368,6 @@ const AdminDashboard = () => {
           )}
         </div>
       </div>
-      <Footer />
     </>
   );
 };

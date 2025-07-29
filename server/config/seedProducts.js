@@ -35,7 +35,7 @@ const products = [
 
 export async function seedProducts() {
   try {
-    await db.sync({ force: true });
+    await db.sync({ alter: true });
     console.log('Database tables created successfully');
    
     await Product.bulkCreate(products);

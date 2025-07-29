@@ -84,7 +84,16 @@ router.post('/login', async (req, res) => {
     // Find user including password for comparison
     const user = await User.findOne({ 
       where: { email },
-      attributes: ['id', 'name', 'email', 'password']
+      attributes: ['id', 'name', 'email', 'password', 'role', 'points']
+    });
+    
+    console.log('Found user from database:', {
+      id: user?.id,
+      name: user?.name,
+      email: user?.email,
+      role: user?.role,
+      points: user?.points,
+      hasPassword: !!user?.password
     });
     
     if (!user) {
@@ -104,14 +113,20 @@ router.post('/login', async (req, res) => {
       { expiresIn: '7d' }
     );
     
+    const responseUser = { 
+      id: user.id, 
+      name: user.name, 
+      email: user.email,
+      role: user.role,
+      points: user.points
+    };
+    
+    console.log('Response user object:', responseUser);
+    
     res.json({
       message: 'Login successful',
       token,
-      user: { 
-        id: user.id, 
-        name: user.name, 
-        email: user.email 
-      }
+      user: responseUser
     });
   } catch (error) {
     console.error('Login error:', error);

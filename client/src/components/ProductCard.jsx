@@ -2,7 +2,7 @@ import React from 'react';
 import cartIcon from '../assets/addToCart.png';
 import '../styles/ProductCard.css';
 
-const ProductCard = ({ img, alt, name, price, id, onAddToCart }) => {
+const ProductCard = ({ img, alt, name, price, id, onAddToCart, buttonText = "Add to cart", isFreeDrink = false, disabled = false }) => {
   const handleImageError = (e) => {
     console.log('Image failed to load:', img);
     e.target.src = 'https://via.placeholder.com/160x160?text=No+Image';
@@ -55,44 +55,50 @@ const ProductCard = ({ img, alt, name, price, id, onAddToCart }) => {
       </div>
       <div className="info">
         <p className="name">{name}</p>
-        <p className="price">${price}</p>
+        <p className="price">{isFreeDrink ? "FREE" : `$${price}`}</p>
       </div>
       <button 
         className="add-cart-btn" 
         onClick={onAddToCart}
+        disabled={disabled}
         style={{
-          background: '#D9D9D9',
+          background: disabled ? '#666' : (isFreeDrink ? '#ff6b35' : '#D9D9D9'),
+          color: disabled ? '#aaa' : (isFreeDrink ? '#fff' : '#000'),
           border: 'none',
           borderRadius: '20px',
           padding: '8px 16px',
-          cursor: 'pointer',
+          cursor: disabled ? 'not-allowed' : 'pointer',
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
           fontWeight: 'bold',
-          fontSize: '0.9rem'
+          fontSize: '0.9rem',
+          boxShadow: isFreeDrink && !disabled ? '0 2px 8px rgba(255, 107, 53, 0.3)' : 'none',
+          opacity: disabled ? 0.6 : 1
         }}
       >
-        <img 
-          src={cartIcon} 
-          alt="Cart" 
-          className='cart-icon'
-          onError={handleCartIconError}
-          onLoad={handleCartIconLoad}
-          style={{
-            width: '28px',           // Force larger size
-            height: '28px',          // Force larger size
-            display: 'block',
-            backgroundColor: 'white', // White background for visibility
-            padding: '2px',
-            objectFit: 'contain',
-            minWidth: '28px',        // Ensure minimum size
-            minHeight: '28px',       // Ensure minimum size
-            maxWidth: 'none',
-            maxHeight: 'none'
-          }}
-        />
-        Add to cart
+        {isFreeDrink ? '🎉' : (
+          <img 
+            src={cartIcon} 
+            alt="Cart" 
+            className='cart-icon'
+            onError={handleCartIconError}
+            onLoad={handleCartIconLoad}
+            style={{
+              width: '28px',
+              height: '28px',
+              display: 'block',
+              backgroundColor: 'white',
+              padding: '2px',
+              objectFit: 'contain',
+              minWidth: '28px',
+              minHeight: '28px',
+              maxWidth: 'none',
+              maxHeight: 'none'
+            }}
+          />
+        )}
+        {buttonText}
       </button>
     </div>
   );

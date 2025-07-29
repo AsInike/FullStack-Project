@@ -36,7 +36,7 @@ const Payment = () => {
       total: total,
       deliveryLocation: deliveryLocation,
       paymentReference: reference,
-      status: 'pending_payment'
+      status: 'pending'
     };
     setOrderData(order);
   }, [cartItems, total, deliveryLocation, user, navigate]);
@@ -78,6 +78,11 @@ const Payment = () => {
     setIsSubmitting(true);
     try {
       console.log('🔍 Submitting order...');
+      console.log('📊 Order data being sent:', {
+        ...orderData,
+        paymentReference,
+        paymentStatus: 'pending_verification'
+      });
       
       // Create order in database
       const response = await ordersAPI.create({
